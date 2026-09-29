@@ -1,0 +1,19 @@
+# Secrets - never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+dxc_credentials.csv
+participant_creds/
+.github_token
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Generated
+progress/.tmp_*.xml
+labs/*/index/

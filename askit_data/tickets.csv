@@ -1,0 +1,101 @@
+ticket_id,created_at,user_id,channel,subject,description,category,priority,sentiment,status
+TKT-0001,2026-09-14 08:00,EMP-1021,phone,Locked out of laptop,"Hi team, I'm locked out of my laptop since this morning after changing my password. I have a client call at 11. My ID is EMP-1021. Please help urgently!",Access,High,Urgent,Open
+TKT-0002,2026-09-14 09:37,EMP-1015,chat,Account locked again,My account keeps getting locked every few minutes. I already reset the password yesterday. This is the third time today!!,Access,High,Frustrated,Open
+TKT-0003,2026-09-14 11:14,EMP-1025,email,Forgot password,"I forgot my password after coming back from leave. Can you help me reset it? No rush, I'm working on my phone for now.",Access,Medium,Calm,Resolved
+TKT-0004,2026-09-14 12:51,EMP-1011,chat,VPN not connecting,VPN shows error 809 when I try to connect from home. Tried twice. Need to access the finance share today.,Network,Medium,Calm,Open
+TKT-0005,2026-09-14 14:28,EMP-1007,chat,VPN keeps dropping,"VPN disconnects every 20 minutes during calls. Very annoying, lost my connection in a customer demo.",Network,Medium,Frustrated,Open
+TKT-0006,2026-09-14 16:05,EMP-1003,phone,Contractor VPN access,Our new contractor starts Monday and needs VPN access to the test servers. How do we set this up?,Access,Low,Calm,Open
+TKT-0007,2026-09-14 17:42,EMP-1012,chat,Laptop blue screen,Laptop shows a blue screen and restarts every time I open Excel. I have a board report due at 4pm today.,Hardware,High,Urgent,In Progress
+TKT-0008,2026-09-14 19:19,EMP-1026,portal,Laptop battery swollen,The laptop base is bulging near the touchpad and it gets very hot. Is it safe to use?,Hardware,High,Calm,Resolved
+TKT-0009,2026-09-14 20:56,EMP-1018,portal,New joiner laptop,We have a new joiner in Sales starting next week. Please arrange a Business laptop.,Hardware,Low,Calm,Resolved
+TKT-0010,2026-09-14 22:33,EMP-1003,chat,Need Python installed,"Please install Python 3.12 on my laptop, it's not in Software Center. Needed for a data project.",Software,Low,Calm,In Progress
+TKT-0011,2026-09-15 00:10,EMP-1019,email,Admin rights request,"I need admin rights to install a driver for a USB device, for about an hour.",Software,Medium,Calm,Open
+TKT-0012,2026-09-15 01:47,EMP-1002,email,Outlook not syncing on phone,Email stopped syncing on my phone after I changed my password. Calendar also not updating.,Email,Medium,Calm,In Progress
+TKT-0013,2026-09-15 03:24,EMP-1003,email,Shared mailbox access,Please give me access to the sales-apac shared mailbox. My manager has approved.,Email,Low,Calm,Open
+TKT-0014,2026-09-15 05:01,EMP-1013,chat,Cannot send as shared mailbox,"I can read the support@ mailbox but when I send from it, it fails. Need this fixed, customers are waiting.",Email,Medium,Frustrated,Resolved
+TKT-0015,2026-09-15 06:38,EMP-1021,chat,Printer jammed,Printer PRN-CHN-04 on floor 3 is jammed again.,Hardware,Low,Calm,Open
+TKT-0016,2026-09-15 08:15,EMP-1012,chat,Wi-Fi not connecting,My laptop won't connect to Orbit-Corp Wi-Fi in the Bengaluru office. Guest Wi-Fi works.,Network,High,Calm,Open
+TKT-0017,2026-09-15 09:52,EMP-1022,chat,Deleted file restore,I deleted a folder of contracts from OneDrive about two weeks ago by mistake. Can it be restored?,Software,Medium,Calm,Open
+TKT-0018,2026-09-15 11:29,EMP-1020,email,Lost laptop at airport,I think I left my laptop at the airport security check in Frankfurt. What do I do? It has client data!,Security,Critical,Urgent,Open
+TKT-0019,2026-09-15 13:06,EMP-1006,phone,Phone stolen,"My phone was stolen last night, it had Outlook and the authenticator app. Please help.",Security,Critical,Urgent,Resolved
+TKT-0020,2026-09-15 14:43,EMP-1009,email,Suspicious email clicked,I clicked a link in an email about my salary revision and entered my password. Now I'm worried.,Security,Critical,Urgent,In Progress
+TKT-0021,2026-09-15 16:20,EMP-1027,portal,Unknown MFA prompts,I keep getting MFA approval requests on my phone that I didn't start. I denied them.,Security,Critical,Frustrated,Open
+TKT-0022,2026-09-15 17:57,EMP-1027,portal,Access to CRM,I need read access to the CRM reports module for the quarterly review.,Access,Low,Calm,In Progress
+TKT-0023,2026-09-15 19:34,EMP-1013,chat,Whole floor no network,Nobody on floor 5 in Chennai has network since 10 am. Around 40 people affected.,Network,Critical,Urgent,Open
+TKT-0024,2026-09-15 21:11,EMP-1007,chat,Monitor for home,I work remotely and would like to request a monitor and headset.,Hardware,Low,Calm,Open
+TKT-0025,2026-09-15 22:48,EMP-1021,phone,New phone MFA,I got a new phone. How do I move my authenticator to it? Old phone still works.,Security,Low,Calm,Resolved
+TKT-0026,2026-09-16 00:25,EMP-1029,phone,Teams calls poor quality,Teams calls keep freezing when I'm on VPN. Without VPN it's fine.,Network,Medium,Frustrated,Open
+TKT-0027,2026-09-16 02:02,EMP-1009,email,Excel crashing,Excel crashes when opening large files since yesterday's update.,Software,Medium,Frustrated,Open
+TKT-0028,2026-09-16 03:39,EMP-1024,chat,Colour printing,Can colour printing be enabled for me? I'm in Finance.,Hardware,Low,Calm,Resolved
+TKT-0029,2026-09-16 05:16,EMP-1029,phone,Locked out of laptop,"Hi team, I'm locked out of my laptop since this morning after changing my password. I have a client call at 11. My ID is EMP-1029. Please help urgently!",Access,High,Urgent,In Progress
+TKT-0030,2026-09-16 06:53,EMP-1008,email,Account locked again,My account keeps getting locked every few minutes. I already reset the password yesterday. This is the third time today!!,Access,High,Frustrated,Resolved
+TKT-0031,2026-09-16 08:30,EMP-1003,portal,Forgot password,"I forgot my password after coming back from leave. Can you help me reset it? No rush, I'm working on my phone for now.",Access,Medium,Calm,Open
+TKT-0032,2026-09-16 10:07,EMP-1005,email,VPN not connecting,VPN shows error 809 when I try to connect from home. Tried twice. Need to access the finance share today.,Network,Medium,Calm,Resolved
+TKT-0033,2026-09-16 11:44,EMP-1020,portal,VPN keeps dropping,"VPN disconnects every 20 minutes during calls. Very annoying, lost my connection in a customer demo.",Network,Medium,Frustrated,Resolved
+TKT-0034,2026-09-16 13:21,EMP-1013,phone,Contractor VPN access,Our new contractor starts Monday and needs VPN access to the test servers. How do we set this up?,Access,Low,Calm,In Progress
+TKT-0035,2026-09-16 14:58,EMP-1018,portal,Laptop blue screen,Laptop shows a blue screen and restarts every time I open Excel. I have a board report due at 4pm today.,Hardware,High,Urgent,Open
+TKT-0036,2026-09-16 16:35,EMP-1022,chat,Laptop battery swollen,The laptop base is bulging near the touchpad and it gets very hot. Is it safe to use?,Hardware,High,Calm,In Progress
+TKT-0037,2026-09-16 18:12,EMP-1004,chat,New joiner laptop,We have a new joiner in Sales starting next week. Please arrange a Business laptop.,Hardware,Low,Calm,Resolved
+TKT-0038,2026-09-16 19:49,EMP-1006,phone,Need Python installed,"Please install Python 3.12 on my laptop, it's not in Software Center. Needed for a data project.",Software,Low,Calm,Open
+TKT-0039,2026-09-16 21:26,EMP-1024,chat,Admin rights request,"I need admin rights to install a driver for a USB device, for about an hour.",Software,Medium,Calm,Open
+TKT-0040,2026-09-16 23:03,EMP-1017,portal,Outlook not syncing on phone,Email stopped syncing on my phone after I changed my password. Calendar also not updating.,Email,Medium,Calm,In Progress
+TKT-0041,2026-09-17 00:40,EMP-1027,email,Shared mailbox access,Please give me access to the sales-apac shared mailbox. My manager has approved.,Email,Low,Calm,Open
+TKT-0042,2026-09-17 02:17,EMP-1012,email,Cannot send as shared mailbox,"I can read the support@ mailbox but when I send from it, it fails. Need this fixed, customers are waiting.",Email,High,Frustrated,Open
+TKT-0043,2026-09-17 03:54,EMP-1020,chat,Printer jammed,Printer PRN-CHN-04 on floor 3 is jammed again.,Hardware,Low,Calm,Resolved
+TKT-0044,2026-09-17 05:31,EMP-1001,portal,Wi-Fi not connecting,My laptop won't connect to Orbit-Corp Wi-Fi in the Bengaluru office. Guest Wi-Fi works.,Network,High,Calm,In Progress
+TKT-0045,2026-09-17 07:08,EMP-1029,chat,Deleted file restore,I deleted a folder of contracts from OneDrive about two weeks ago by mistake. Can it be restored?,Software,Medium,Calm,Open
+TKT-0046,2026-09-17 08:45,EMP-1002,email,Lost laptop at airport,I think I left my laptop at the airport security check in Frankfurt. What do I do? It has client data!,Security,Critical,Urgent,Open
+TKT-0047,2026-09-17 10:22,EMP-1003,phone,Phone stolen,"My phone was stolen last night, it had Outlook and the authenticator app. Please help.",Security,Critical,Urgent,Open
+TKT-0048,2026-09-17 11:59,EMP-1025,email,Suspicious email clicked,I clicked a link in an email about my salary revision and entered my password. Now I'm worried.,Security,Critical,Urgent,Open
+TKT-0049,2026-09-17 13:36,EMP-1022,phone,Unknown MFA prompts,I keep getting MFA approval requests on my phone that I didn't start. I denied them.,Security,Critical,Frustrated,Open
+TKT-0050,2026-09-17 15:13,EMP-1009,phone,Access to CRM,I need read access to the CRM reports module for the quarterly review.,Access,Low,Calm,Open
+TKT-0051,2026-09-17 16:50,EMP-1030,email,Whole floor no network,Nobody on floor 5 in Chennai has network since 10 am. Around 40 people affected.,Network,Critical,Urgent,In Progress
+TKT-0052,2026-09-17 18:27,EMP-1013,chat,Monitor for home,I work remotely and would like to request a monitor and headset.,Hardware,Low,Calm,Resolved
+TKT-0053,2026-09-17 20:04,EMP-1029,phone,New phone MFA,I got a new phone. How do I move my authenticator to it? Old phone still works.,Security,Low,Calm,Open
+TKT-0054,2026-09-17 21:41,EMP-1008,email,Teams calls poor quality,Teams calls keep freezing when I'm on VPN. Without VPN it's fine.,Network,Medium,Frustrated,Open
+TKT-0055,2026-09-17 23:18,EMP-1011,portal,Excel crashing,Excel crashes when opening large files since yesterday's update.,Software,Medium,Frustrated,Open
+TKT-0056,2026-09-18 00:55,EMP-1019,email,Colour printing,Can colour printing be enabled for me? I'm in Finance.,Hardware,Low,Calm,Open
+TKT-0057,2026-09-18 02:32,EMP-1003,portal,Locked out of laptop,"Hi team, I'm locked out of my laptop since this morning after changing my password. I have a client call at 11. My ID is EMP-1003. Please help urgently!",Access,High,Urgent,Open
+TKT-0058,2026-09-18 04:09,EMP-1003,portal,Account locked again,My account keeps getting locked every few minutes. I already reset the password yesterday. This is the third time today!!,Access,High,Frustrated,In Progress
+TKT-0059,2026-09-18 05:46,EMP-1003,email,Forgot password,"I forgot my password after coming back from leave. Can you help me reset it? No rush, I'm working on my phone for now.",Access,Medium,Calm,In Progress
+TKT-0060,2026-09-18 07:23,EMP-1022,phone,VPN not connecting,VPN shows error 809 when I try to connect from home. Tried twice. Need to access the finance share today.,Network,Medium,Calm,Open
+TKT-0061,2026-09-18 09:00,EMP-1018,email,VPN keeps dropping,"VPN disconnects every 20 minutes during calls. Very annoying, lost my connection in a customer demo.",Network,Medium,Frustrated,Resolved
+TKT-0062,2026-09-18 10:37,EMP-1008,phone,Contractor VPN access,Our new contractor starts Monday and needs VPN access to the test servers. How do we set this up?,Access,Low,Calm,Resolved
+TKT-0063,2026-09-18 12:14,EMP-1007,portal,Laptop blue screen,Laptop shows a blue screen and restarts every time I open Excel. I have a board report due at 4pm today.,Hardware,High,Urgent,Open
+TKT-0064,2026-09-18 13:51,EMP-1022,phone,Laptop battery swollen,The laptop base is bulging near the touchpad and it gets very hot. Is it safe to use?,Hardware,High,Calm,In Progress
+TKT-0065,2026-09-18 15:28,EMP-1014,phone,New joiner laptop,We have a new joiner in Sales starting next week. Please arrange a Business laptop.,Hardware,Low,Calm,Resolved
+TKT-0066,2026-09-18 17:05,EMP-1028,portal,Need Python installed,"Please install Python 3.12 on my laptop, it's not in Software Center. Needed for a data project.",Software,Low,Calm,Open
+TKT-0067,2026-09-18 18:42,EMP-1002,phone,Admin rights request,"I need admin rights to install a driver for a USB device, for about an hour.",Software,Medium,Calm,In Progress
+TKT-0068,2026-09-18 20:19,EMP-1026,portal,Outlook not syncing on phone,Email stopped syncing on my phone after I changed my password. Calendar also not updating.,Email,Medium,Calm,Open
+TKT-0069,2026-09-18 21:56,EMP-1007,email,Shared mailbox access,Please give me access to the sales-apac shared mailbox. My manager has approved.,Email,Low,Calm,Resolved
+TKT-0070,2026-09-18 23:33,EMP-1005,phone,Cannot send as shared mailbox,"I can read the support@ mailbox but when I send from it, it fails. Need this fixed, customers are waiting.",Email,Medium,Frustrated,Open
+TKT-0071,2026-09-19 01:10,EMP-1009,phone,Printer jammed,Printer PRN-CHN-04 on floor 3 is jammed again.,Hardware,Low,Calm,Open
+TKT-0072,2026-09-19 02:47,EMP-1028,portal,Wi-Fi not connecting,My laptop won't connect to Orbit-Corp Wi-Fi in the Bengaluru office. Guest Wi-Fi works.,Network,Medium,Calm,Resolved
+TKT-0073,2026-09-19 04:24,EMP-1026,portal,Deleted file restore,I deleted a folder of contracts from OneDrive about two weeks ago by mistake. Can it be restored?,Software,Medium,Calm,Open
+TKT-0074,2026-09-19 06:01,EMP-1021,portal,Lost laptop at airport,I think I left my laptop at the airport security check in Frankfurt. What do I do? It has client data!,Security,Critical,Urgent,Open
+TKT-0075,2026-09-19 07:38,EMP-1030,email,Phone stolen,"My phone was stolen last night, it had Outlook and the authenticator app. Please help.",Security,Critical,Urgent,Open
+TKT-0076,2026-09-19 09:15,EMP-1014,phone,Suspicious email clicked,I clicked a link in an email about my salary revision and entered my password. Now I'm worried.,Security,Critical,Urgent,Resolved
+TKT-0077,2026-09-19 10:52,EMP-1007,phone,Unknown MFA prompts,I keep getting MFA approval requests on my phone that I didn't start. I denied them.,Security,Critical,Frustrated,Open
+TKT-0078,2026-09-19 12:29,EMP-1006,phone,Access to CRM,I need read access to the CRM reports module for the quarterly review.,Access,Low,Calm,Open
+TKT-0079,2026-09-19 14:06,EMP-1013,chat,Whole floor no network,Nobody on floor 5 in Chennai has network since 10 am. Around 40 people affected.,Network,Critical,Urgent,Resolved
+TKT-0080,2026-09-19 15:43,EMP-1010,phone,Monitor for home,I work remotely and would like to request a monitor and headset.,Hardware,Low,Calm,Resolved
+TKT-0081,2026-09-19 17:20,EMP-1005,email,New phone MFA,I got a new phone. How do I move my authenticator to it? Old phone still works.,Security,Low,Calm,In Progress
+TKT-0082,2026-09-19 18:57,EMP-1007,portal,Teams calls poor quality,Teams calls keep freezing when I'm on VPN. Without VPN it's fine.,Network,Medium,Frustrated,Open
+TKT-0083,2026-09-19 20:34,EMP-1024,chat,Excel crashing,Excel crashes when opening large files since yesterday's update.,Software,Medium,Frustrated,Open
+TKT-0084,2026-09-19 22:11,EMP-1002,phone,Colour printing,Can colour printing be enabled for me? I'm in Finance.,Hardware,Low,Calm,Open
+TKT-0085,2026-09-19 23:48,EMP-1017,portal,Account locked again,My account keeps getting locked every few minutes. I already reset the password yesterday. This is the third time today!!,Access,High,Frustrated,Open
+TKT-0086,2026-09-20 01:25,EMP-1020,portal,Forgot password,"I forgot my password after coming back from leave. Can you help me reset it? No rush, I'm working on my phone for now.",Access,Medium,Calm,Open
+TKT-0087,2026-09-20 03:02,EMP-1004,email,Shared mailbox access,Please give me access to the sales-apac shared mailbox. My manager has approved.,Email,Low,Calm,Open
+TKT-0088,2026-09-20 04:39,EMP-1003,phone,Suspicious email clicked,I clicked a link in an email about my salary revision and entered my password. Now I'm worried.,Security,Critical,Urgent,In Progress
+TKT-0089,2026-09-20 06:16,EMP-1007,chat,New joiner laptop,We have a new joiner in Sales starting next week. Please arrange a Business laptop.,Hardware,Low,Calm,Open
+TKT-0090,2026-09-20 07:53,EMP-1013,email,New joiner laptop,We have a new joiner in Sales starting next week. Please arrange a Business laptop.,Hardware,Low,Calm,In Progress
+TKT-0091,2026-09-20 09:30,EMP-1011,portal,Printer jammed,Printer PRN-CHN-04 on floor 3 is jammed again.,Hardware,Low,Calm,Open
+TKT-0092,2026-09-20 11:07,EMP-1020,portal,Printer jammed,Printer PRN-CHN-04 on floor 3 is jammed again.,Hardware,Low,Calm,Open
+TKT-0093,2026-09-20 12:44,EMP-1007,chat,Lost laptop at airport,I think I left my laptop at the airport security check in Frankfurt. What do I do? It has client data!,Security,Critical,Urgent,Open
+TKT-0094,2026-09-20 14:21,EMP-1029,portal,Outlook not syncing on phone,Email stopped syncing on my phone after I changed my password. Calendar also not updating.,Email,Medium,Calm,Open
+TKT-0095,2026-09-20 15:58,EMP-1010,email,Outlook not syncing on phone,Email stopped syncing on my phone after I changed my password. Calendar also not updating.,Email,Medium,Calm,Resolved
+TKT-0096,2026-09-20 17:35,EMP-1018,chat,Excel crashing,Excel crashes when opening large files since yesterday's update.,Software,Medium,Frustrated,Open
+TKT-0097,2026-09-20 19:12,EMP-1027,chat,Access to CRM,I need read access to the CRM reports module for the quarterly review.,Access,Low,Calm,Open
+TKT-0098,2026-09-20 20:49,EMP-1009,portal,VPN keeps dropping,"VPN disconnects every 20 minutes during calls. Very annoying, lost my connection in a customer demo.",Network,Medium,Frustrated,Open
+TKT-0099,2026-09-20 22:26,EMP-1018,email,Monitor for home,I work remotely and would like to request a monitor and headset.,Hardware,Low,Calm,In Progress
+TKT-0100,2026-09-21 00:03,EMP-1020,email,Need Python installed,"Please install Python 3.12 on my laptop, it's not in Software Center. Needed for a data project.",Software,Low,Calm,In Progress

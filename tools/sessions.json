@@ -1,0 +1,10 @@
+{
+  "S01": {
+    "title": "Foundations of GenAI",
+    "date": "2026-09-30",
+    "html": "sessions/S01/index.html",
+    "labs": [
+      "lab01-hello-llm"
+    ]
+  }
+}
