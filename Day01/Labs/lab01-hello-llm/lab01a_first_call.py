@@ -1,7 +1,7 @@
 """Lab B - Your first Bedrock call and a model shoot-out.
 
-Run:   python labs\\lab01-hello-llm\\lab01a_first_call.py
-Check: pytest labs\\lab01-hello-llm -k "challenge_1 or challenge_2 or challenge_3"
+Run:   python Day01\\Labs\\lab01-hello-llm\\lab01a_first_call.py
+Check: pytest Day01\\Labs\\lab01-hello-llm -k "challenge_1 or challenge_2 or challenge_3"
 
 Complete TODO-1, TODO-2, TODO-3. Everything else is ready.
 """
@@ -10,7 +10,7 @@ import sys
 import time
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # lets us import askit_core
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))  # lets us import askit_core
 from askit_core import bedrock, config, data  # noqa: E402
 
 HERE = Path(__file__).parent
@@ -89,7 +89,7 @@ def main():
 
     RESULTS_FILE.parent.mkdir(exist_ok=True)
     RESULTS_FILE.write_text(json.dumps({"summary": summary, "rows": rows}, indent=2), encoding="utf-8")
-    print(f"\nSaved {RESULTS_FILE.relative_to(HERE.parents[1])}")
+    print(f"\nSaved {RESULTS_FILE.relative_to(HERE.parents[2])}")
 
 
 if __name__ == "__main__":

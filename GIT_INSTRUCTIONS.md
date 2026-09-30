@@ -8,6 +8,10 @@ Your folder on the VM: **`C:\AskIT\dxc-agentic-ai`** (never move or rename it)
 - **Pull** = trainer's new content → your VM (`upstream`)
 - **Push** = your results → your GitHub fork (`origin`)
 
+`origin` and `upstream` are just **nicknames** Git keeps for two GitHub web addresses. They are **not folders** — nothing is created on disk. Check them anytime with `git remote -v`.
+
+**Your Command Prompt opens at `C:\Users\Admin>` (or your user folder) — that is normal.** The commands below move you to `C:\AskIT` themselves (`cd /d C:\AskIT\dxc-agentic-ai`). Each time you open a new Command Prompt for git, run that `cd` line first.
+
 You never push to the trainer's repo. You do **not** need `git init` — `git clone` creates the repo for you.
 
 ---
@@ -36,6 +40,7 @@ Check: `git config --global --list`
 3. Click **Fork** → **Create fork**. You now have `https://github.com/YOUR-GITHUB/dxcgenai`
 
 ### 4. Clone YOUR fork into C:\AskIT (replace YOUR-GITHUB)
+Run from any folder — `mkdir` creates `C:\AskIT` and `cd` moves you there:
 ```
 mkdir C:\AskIT
 cd /d C:\AskIT
@@ -73,7 +78,7 @@ git merge upstream/main --no-edit
 ```
 (Same result as `git pull upstream main --no-edit`.)
 
-New files appear: `sessions\SNN\index.html` (today's page) and `labs\labNN-...\` (today's lab).
+A new `DayNN` folder appears: `DayNN\Content\index.html` (today's page) and `DayNN\Labs\` (today's lab code).
 
 ---
 
@@ -100,13 +105,13 @@ Check on GitHub: open your fork → you should see your latest commit and the `p
 | Push asks for a password / fails | Sign in through the GitHub browser popup (passwords no longer work for git); make sure you cloned **your** fork |
 | `403` / permission denied on push | `origin` is the trainer repo. Run: `git remote set-url origin https://github.com/YOUR-GITHUB/dxcgenai.git` |
 | Push rejected (fork is ahead/behind) | `git pull origin main --no-edit` then push again |
-| Merge conflict after pulling | You edited a file outside `labs\` or `teams\`. Run `git merge --abort`, then call the trainer |
+| Merge conflict after pulling | You edited a file outside `DayNN\Labs\` or `teams\`. Run `git merge --abort`, then call the trainer |
 | `Author identity unknown` | Redo step 2 (git config user.name / user.email) |
 | "dubious ownership" | Run the `safe.directory` command from step 2 |
 | Want to see what changed | `git status` and `git log --oneline -5` |
 
 ## Rules
-1. Edit **only** files in `labs\` and your own `teams\team-x\` folder.
+1. Edit **only** files in the `DayNN\Labs\` folders and your own `teams\team-x\` folder.
 2. Never put keys in code or push `.env` (it is ignored automatically).
 3. Pull every morning **before** you start; push at the end of every day.
 4. Never use `git push --force`.

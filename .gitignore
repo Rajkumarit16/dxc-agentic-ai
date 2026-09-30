@@ -4,7 +4,7 @@
 !.env.example
 *.pem
 *.key
-dxc_credentials.csv
+*credentials*.csv
 participant_creds/
 .github_token
 
@@ -16,4 +16,4 @@ __pycache__/
 
 # Generated
 progress/.tmp_*.xml
-labs/*/index/
+Day*/Labs/*/index/

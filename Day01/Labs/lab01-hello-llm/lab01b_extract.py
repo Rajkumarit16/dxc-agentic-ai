@@ -1,7 +1,7 @@
 """Lab C - Structured ticket extraction + your first Langfuse trace.
 
-Run:   python labs\\lab01-hello-llm\\lab01b_extract.py
-Check: pytest labs\\lab01-hello-llm -k "challenge_4 or challenge_5 or challenge_6"
+Run:   python Day01\\Labs\\lab01-hello-llm\\lab01b_extract.py
+Check: pytest Day01\\Labs\\lab01-hello-llm -k "challenge_4 or challenge_5 or challenge_6"
 
 Complete TODO-4, TODO-5, TODO-6. Everything else is ready.
 """
@@ -12,7 +12,7 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # lets us import askit_core
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))  # lets us import askit_core
 from askit_core import bedrock, config, data  # noqa: E402
 from askit_core.tracing import langfuse, observe  # noqa: E402,F401
 
@@ -100,9 +100,9 @@ def main():
     langfuse.flush()
     RESULTS_FILE.parent.mkdir(exist_ok=True)
     RESULTS_FILE.write_text(json.dumps(rows, indent=2), encoding="utf-8")
-    print(f"\nSaved {RESULTS_FILE.relative_to(HERE.parents[1])}")
+    print(f"\nSaved {RESULTS_FILE.relative_to(HERE.parents[2])}")
     print("Now open Langfuse -> Tracing -> click your latest 'extract_ticket' trace -> copy the URL")
-    print("and paste it into labs\\lab01-hello-llm\\submission\\trace_url.txt")
+    print("and paste it into Day01\\Labs\\lab01-hello-llm\\submission\\trace_url.txt")
 
 
 if __name__ == "__main__":

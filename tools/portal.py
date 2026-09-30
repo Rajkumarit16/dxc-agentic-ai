@@ -1,12 +1,15 @@
 """Local course portal (runs on YOUR VM only, http://localhost:8765).
 
-- Serves the session pages from sessions/
+- Serves the session pages (DayNN/Content) and labs (DayNN/Labs)
 - /api/me       -> your identity from me.json
+- /me           -> "My Status" page: your XP, quiz, labs and points for every session
 - /api/dayend   -> Day End button: saves XP + lab results, commits and pushes
 Started by START_DAY.bat. Close the window to stop it.
 """
+import html as _html
 import json
 import posixpath
+import re
 import sys
 import threading
 import time
@@ -51,9 +54,11 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(load_me() or {}, 200 if load_me() else 404)
         if self.path in ("/", "/index.html"):
             return self._index()
+        if self.path.split("?")[0] == "/me":
+            return self._me()
         # only serve session pages and labs (no secrets like .env)
         clean = posixpath.normpath(self.path.split("?")[0])
-        if not (clean.startswith("/sessions/") or clean.startswith("/labs/")):
+        if not re.match(r"^/Day\d+/(Content|Labs)/", clean):
             return self._json({"error": "not found"}, 404)
         return super().do_GET()
 
@@ -84,6 +89,60 @@ class Handler(SimpleHTTPRequestHandler):
         LIVE_SESSIONS.add(session)
         return self._json({"ok": True})
 
+    def _me(self):
+        """My Status: reads only your own progress/*.json files (no internet needed)."""
+        me = load_me() or {}
+        esc = _html.escape
+
+        def rd(name):
+            try:
+                return json.loads((PROGRESS / name).read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                return {}
+
+        rows, tot_pts, tot_xp, tot_pass, tot_lab = "", 0, 0, 0, 0
+        details = ""
+        for k, v in SESSIONS.items():
+            xp, lab, live = rd(f"{k}_xp.json"), rd(f"{k}_lab.json"), rd(f"{k}_live.json")
+            if not (xp or lab or live):
+                rows += f'<tr class="dim"><td>{k}</td><td>{esc(v["title"])}</td><td colspan="6">not started</td></tr>'
+                continue
+            xpv = xp.get("xp_total", live.get("xp_total", 0)) or 0
+            q = xp.get("quiz") or {}
+            qn, qc = len(q), sum(1 for a in q.values() if isinstance(a, dict) and a.get("correct"))
+            labs = lab.get("labs", {})
+            passed = sum(len(x.get("passed", [])) for x in labs.values())
+            total = sum(x.get("total", 0) for x in labs.values())
+            pts = xpv + 10 * passed
+            tot_pts, tot_xp, tot_pass, tot_lab = tot_pts + pts, tot_xp + xpv, tot_pass + passed, tot_lab + total
+            mins = xp.get("active_minutes", live.get("active_minutes", 0)) or 0
+            done = "&#9989;" if xp else "&#10060; not yet"
+            rows += (f"<tr><td>{k}</td><td>{esc(v['title'])}</td><td>{xpv}</td><td>{qc}/{qn}</td>"
+                     f"<td>{passed}/{total}</td><td>{mins}</td><td>{done}</td><td><b>{pts}</b></td></tr>")
+            for name, x in labs.items():
+                if x.get("failed"):
+                    details += (f"<p><b>{k} &middot; {esc(name)}</b> &mdash; still to do: "
+                                + ", ".join(esc(f) for f in x["failed"]) + "</p>")
+        if not details:
+            details = "<p>Nothing pending. &#127881;</p>"
+        page = f"""<!doctype html><meta charset="utf-8"><title>My Status</title>
+<body style="font-family:Segoe UI,system-ui;max-width:1000px;margin:30px auto;font-size:20px;line-height:1.4">
+<style>table{{border-collapse:collapse;width:100%}}th,td{{border:1px solid #bbb;padding:8px 10px;text-align:left}}
+th{{background:#eef}}tr.dim td{{color:#888}}</style>
+<h1>&#128202; My Status</h1>
+<p><b>{esc(str(me.get('name', 'participant')))}</b> &middot; Team {esc(str(me.get('team', '?')))} &middot; GitHub: {esc(str(me.get('github_user', '?')))}</p>
+<p><b>Total: {tot_pts} points</b> &nbsp;({tot_xp} XP + 10 &times; {tot_pass} challenges passed of {tot_lab})</p>
+<table><tr><th>Session</th><th>Topic</th><th>XP</th><th>Quiz</th><th>Challenges</th><th>Active min</th><th>Day End</th><th>Points</th></tr>{rows}</table>
+<h2>Still to do</h2>{details}
+<p style="font-size:16px;color:#555">Shows what is saved on your VM. Press <b>Day End</b> on the last page of each session to save and push. AhaSlides quiz scores are added by the trainer on the class leaderboard. <a href="/">Home</a></p>
+</body>"""
+        body = page.encode()
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
     def _index(self):
         me = load_me() or {}
         cur = today_session()
@@ -94,7 +153,7 @@ class Handler(SimpleHTTPRequestHandler):
         html = f"""<!doctype html><meta charset="utf-8"><title>AskIT Portal</title>
 <body style="font-family:Segoe UI,system-ui;max-width:700px;margin:40px auto;font-size:20px">
 <h1>AskIT Program</h1><p>Welcome, <b>{me.get('name', 'participant')}</b> (Team {me.get('team', '?')})</p>
-<ul>{rows}</ul></body>"""
+<ul>{rows}</ul><p><a href="/me">&#128202; My Status</a></p></body>"""
         body = html.encode()
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
@@ -128,4 +187,5 @@ if __name__ == "__main__":
         url = f"http://localhost:{PORT}/"
     threading.Timer(1.0, lambda: webbrowser.open(url)).start()
     print(f"AskIT portal running at http://localhost:{PORT}  (keep this window open; close it to stop)")
+    print(f"My Status page: http://localhost:{PORT}/me")
     srv.serve_forever()

@@ -254,7 +254,7 @@ footer .bar{justify-content:space-between}
       <li><b>Task A2:</b> Run the same prompt 3× at temperature 0 and 3× at temperature 1. What changed? <span class="tag">AWS</span></li>
       <li><b>Stretch:</b> Try an open-weight model (Llama or Mistral) — how does it compare? <span class="tag">stretch</span></li>
     </ol>
-        <div class="openpath">📂 Open in VS Code: <span class="path">C:\AskIT\dxc-agentic-ai\labs\lab01-hello-llm\A_bedrock_playground.md</span></div>
+        <div class="openpath">📂 Open in VS Code: <span class="path">C:\AskIT\dxc-agentic-ai\Day01\Labs\lab01-hello-llm\A_bedrock_playground.md</span></div>
     <div class="row"><button class="btn ghost" data-done="labA">✅ I finished Lab A (+20 XP)</button></div>
   </div>
 </section>
@@ -305,14 +305,14 @@ footer .bar{justify-content:space-between}
     <h2>Your first Bedrock call — and a model shoot-out</h2>
     <div class="wwho"><div><b>What we do</b>Make your first Bedrock Converse API call from Python and compare a small and a large model on real tickets.</div><div><b>Why</b>Every agent we build is a loop around this one call. Tokens and latency are what you pay for.</div><div><b>Outcome / learning</b>You can call an LLM from code, read tokens and latency, and choose a small or large model based on evidence.</div><div><b>How</b>Complete 3 TODOs in lab01a_first_call.py &rarr; run 5 tickets on both models &rarr; run pytest.</div></div>
     <ol>
-      <li>Open <span class="path">labs/lab01-hello-llm/lab01a_first_call.py</span> — most of it is ready</li>
+      <li>Open <span class="path">Day01/Labs/lab01-hello-llm/lab01a_first_call.py</span> — most of it is ready</li>
       <li><b>Challenge 1 (TODO-1):</b> send a ticket to Bedrock using the Converse API</li>
       <li><b>Challenge 2 (TODO-2):</b> print input tokens, output tokens and latency</li>
       <li><b>Challenge 3 (TODO-3):</b> run 5 tickets on a small and a large model, then <b>run the script</b> to save your results</li>
       <li><b>Stretch:</b> estimate the daily cost of 1,000 tickets/day with each model</li>
-      <li>Check yourself: <span class="path">pytest labs\lab01-hello-llm</span> (Day End will push everything)</li>
+      <li>Check yourself: <span class="path">pytest Day01\Labs\lab01-hello-llm</span> (Day End will push everything)</li>
     </ol>
-    <div class="openpath">📂 Open in VS Code: <span class="path">C:\AskIT\dxc-agentic-ai\labs\lab01-hello-llm\README.md</span></div>
+    <div class="openpath">📂 Open in VS Code: <span class="path">C:\AskIT\dxc-agentic-ai\Day01\Labs\lab01-hello-llm\README.md</span></div>
     <div class="row"><button class="btn ghost" data-done="labB">✅ I finished Lab B (+20 XP)</button></div>
   </div>
 </section>
@@ -427,15 +427,15 @@ footer .bar{justify-content:space-between}
     <h2>Structured ticket extraction + your first trace</h2>
     <div class="wwho"><div><b>What we do</b>Turn messy ticket text into clean, validated fields (category, priority, user, summary, sentiment) and trace every call in Langfuse.</div><div><b>Why</b>Agents need data, not prose. Structured output plus validation makes results reliable, and tracing shows what the model actually did.</div><div><b>Outcome / learning</b>Reliable structured output from an LLM, and your first trace to debug from.</div><div><b>How</b>Define the Ticket schema (TODO-4) &rarr; force the model to answer through a tool call and validate it (TODO-5) &rarr; add Langfuse tracing (TODO-6).</div></div>
     <ol>
-      <li>Open <span class="path">labs/lab01-hello-llm/lab01b_extract.py</span></li>
+      <li>Open <span class="path">Day01/Labs/lab01-hello-llm/lab01b_extract.py</span></li>
       <li><b>Challenge 4 (TODO-4):</b> complete the <b>Ticket</b> schema — category, priority, user_id, summary, sentiment</li>
       <li><b>Challenge 5 (TODO-5):</b> get structured output from Bedrock and validate it</li>
       <li><b>Challenge 6 (TODO-6):</b> add Langfuse tracing, run the script, paste your trace URL into <span class="path">submission\trace_url.txt</span></li>
       <li><b>Stretch A:</b> extract the same ticket 5× at temperature 0 and 5× at 1 — how consistent are the fields?</li>
       <li><b>Stretch B:</b> run all 100 tickets — print the category and priority split</li>
-      <li>Check yourself: <span class="path">pytest labs\lab01-hello-llm</span> (Day End will push everything)</li>
+      <li>Check yourself: <span class="path">pytest Day01\Labs\lab01-hello-llm</span> (Day End will push everything)</li>
     </ol>
-    <div class="openpath">📂 Open in VS Code: <span class="path">C:\AskIT\dxc-agentic-ai\labs\lab01-hello-llm\README.md</span></div>
+    <div class="openpath">📂 Open in VS Code: <span class="path">C:\AskIT\dxc-agentic-ai\Day01\Labs\lab01-hello-llm\README.md</span></div>
     <div class="row"><button class="btn ghost" data-done="labC">✅ I finished Lab C (+20 XP)</button></div>
   </div>
 </section>

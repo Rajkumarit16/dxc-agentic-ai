@@ -12,11 +12,11 @@
 1. Open the file in VS Code. Find `TODO-n` — the hints tell you exactly what to write.
 2. Run it (VS Code terminal, `(.venv)` must be showing):
    ```
-   python labs\lab01-hello-llm\lab01a_first_call.py
+   python Day01\Labs\lab01-hello-llm\lab01a_first_call.py
    ```
 3. Check yourself any time:
    ```
-   pytest labs\lab01-hello-llm
+   pytest Day01\Labs\lab01-hello-llm
    ```
    6 tests = 6 challenges. Aim for **6 passed**.
 4. At the end of class click **🏁 Day End** in the session page — it pushes everything.

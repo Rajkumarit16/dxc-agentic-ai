@@ -42,7 +42,7 @@ def lab_results(session):
     """Run pytest for the session's labs; return {lab: {passed, failed, total}}."""
     out = {}
     for lab in SESSIONS[session]["labs"]:
-        lab_dir = ROOT / "labs" / lab
+        lab_dir = ROOT / SESSIONS[session]["labs_dir"] / lab
         if not (lab_dir / "tests").exists():
             out[lab] = {"passed": [], "failed": [], "total": 0, "note": "no tests yet"}
             continue
@@ -106,7 +106,8 @@ def run_day_end(session=None, xp_payload=None):
 
 
 def _commit_and_push(session, me, steps):
-    run(["git", "add", "progress", "labs", "teams", "me.json"])
+    lab_roots = sorted({v["labs_dir"] for v in SESSIONS.values() if v.get("labs_dir") and (ROOT / v["labs_dir"]).exists()})
+    run(["git", "add", "progress", "teams", "me.json", *lab_roots])
     code, _ = run(["git", "diff", "--cached", "--quiet"])
     if code != 0:
         code, msg = run(["git", "commit", "-m", f"{session} day end - {me.get('name', '')}"])

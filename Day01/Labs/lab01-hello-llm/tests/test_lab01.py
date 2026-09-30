@@ -1,4 +1,4 @@
-"""Lab 1 auto-checks - one test per challenge. Run: pytest labs\\lab01-hello-llm
+"""Lab 1 auto-checks - one test per challenge. Run: pytest Day01\\Labs\\lab01-hello-llm
 Tests 1, 2, 4, 5 run offline (a fake Bedrock client). Tests 3 and 6 check your saved evidence.
 """
 import json
@@ -10,7 +10,7 @@ import pytest
 
 LAB = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(LAB))
-sys.path.insert(0, str(LAB.parents[1]))
+sys.path.insert(0, str(LAB.parents[2]))
 
 import lab01a_first_call as a  # noqa: E402
 import lab01b_extract as b  # noqa: E402
@@ -56,7 +56,7 @@ def test_challenge_3_model_shootout():
     rows = a.compare_models(FakeClient(), ["m1", "m2"], tickets)
     assert len(rows) == 6, "TODO-3: one row per model x ticket"
     assert {"model_id", "ticket_id", "text", "input_tokens", "output_tokens", "latency_ms"} <= set(rows[0])
-    assert a.RESULTS_FILE.exists(), "Run the script for real: python labs\\lab01-hello-llm\\lab01a_first_call.py"
+    assert a.RESULTS_FILE.exists(), "Run the script for real: python Day01\\Labs\\lab01-hello-llm\\lab01a_first_call.py"
     saved = json.loads(a.RESULTS_FILE.read_text(encoding="utf-8"))
     assert len(saved["summary"]) >= 2, "Evidence file should show 2 models"
     assert all(r["text"] for r in saved["rows"]), "Evidence file has empty answers"

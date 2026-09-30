@@ -27,8 +27,8 @@ C:\AskIT\dxc-agentic-ai\
   SETUP.bat            <- once, in Session 1
   me.json              <- your name, GitHub user, team (created by SETUP)
   .env                 <- your keys (NEVER shared, never pushed)
-  sessions\S01\        <- session pages (opened for you by START_DAY)
-  labs\lab01-hello-llm\
+  Day01\Content\      <- Day 1 session page (opened for you by START_DAY)
+  Day01\Labs\lab01-hello-llm\
       README.md        <- lab steps and challenges
       *.py             <- code with TODO-1, TODO-2 ... for you to complete
       *.md             <- AWS console steps (when a lab uses AWS)
@@ -39,16 +39,17 @@ C:\AskIT\dxc-agentic-ai\
   teams\team-a ... d\  <- your team's ADRs and review-board files
   governance\          <- templates (ADR, ARB, SRB, PRR ...)
   progress\            <- written by Day End (XP + lab results). Don't edit.
+  Day02\ Day03\ ...  <- each new day appears here (Content\ = session page, Labs\ = lab code)
   solutions\           <- released after each session
 ```
 
 ## Rules that keep everything working
 
 1. The repo lives **only** at `C:\AskIT\dxc-agentic-ai`. Don't move or rename it.
-2. Edit **only** files inside `labs\` and your own `teams\team-x\` folder.
+2. Edit **only** files inside the `DayNN\Labs\` folders and your own `teams\team-x\` folder.
 3. Don't edit `progress\` by hand — Day End writes it.
 4. Never paste keys into code. Keys go in `.env` only.
 5. Use **one browser** (Edge) for the session page — your XP is stored in that browser.
 6. Keep the **START_DAY black window open** all class — it saves your progress to GitHub every 15 minutes.
 7. Check a lab yourself any time — in the VS Code terminal:
-   `pytest labs\lab01-hello-llm`
+   `pytest Day01\Labs\lab01-hello-llm`
