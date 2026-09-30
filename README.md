@@ -2,7 +2,7 @@
 
 > **Orbit Corp's IT Helpdesk is drowning in tickets. You are building AskIT — an AI helpdesk agent that answers, acts and escalates.**
 
-First time? Do **[setup/SETUP_GUIDE.md](setup/SETUP_GUIDE.md)** once (Session 1, Lab A). Git help: **[GIT_INSTRUCTIONS.md](GIT_INSTRUCTIONS.md)**.
+First time? Do **[setup/SETUP_GUIDE.md](setup/SETUP_GUIDE.md)** once (Session 1, Lab A). Git help: **[GIT_INSTRUCTIONS.md](GIT_INSTRUCTIONS.md)**. What is on which day: **[COURSE_MAP.md](COURSE_MAP.md)**.
 
 ---
 
@@ -14,7 +14,7 @@ First time? Do **[setup/SETUP_GUIDE.md](setup/SETUP_GUIDE.md)** once (Session 1,
 | **During class** | Follow the session page. At each 🧪 lab card, open the file it names in VS Code and complete the TODOs. | Your XP, quiz answers and lab progress build up. |
 | **End of class** | Last page of the session → click **🏁 Day End · Save & Push** | Saves your XP + exit ticket, checks your labs, commits and pushes to your GitHub fork. |
 
-Day End button didn't work? Double-click `DAY_END.bat` (backup). Still stuck → call the trainer.
+See your own progress any time at **http://localhost:8765/me** (**My Status**).\n\nDay End button didn't work? Double-click `DAY_END.bat` (backup). Still stuck → call the trainer.
 
 ---
 
