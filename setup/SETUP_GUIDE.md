@@ -43,7 +43,7 @@ In File Explorer, double-click **`C:\AskIT\dxc-agentic-ai\SETUP.bat`**. It will:
 3. Open a terminal (`Ctrl+`\``) — you should see `(.venv)` at the start of the line.
 
 ## Step 5 — Start the day
-Double-click **`START_DAY.bat`** → today's session page opens at `http://localhost:8765`. Keep the black window open.
+In Command Prompt: `cd /d C:\AskIT\dxc-agentic-ai` then **`START_DAY.bat 1`** (Day 1) or **`START_DAY.bat 2`** (Day 2). The session page opens at `http://localhost:8765`. Keep the black window open.
 
 ---
 
@@ -57,3 +57,8 @@ Double-click **`START_DAY.bat`** → today's session page opens at `http://local
 | `[!!] AWS credentials` | Re-check keys in `.env` (no spaces, no quotes), save, run `python tools\verify_env.py` |
 | Bedrock `AccessDenied` / model not found | Call the trainer — model access or model ID issue |
 | Page doesn't open | Open `http://localhost:8765` manually while START_DAY.bat window is open |
+| `(.venv)` not showing / `ModuleNotFoundError` | Run `.venv\Scripts\activate` in **Command Prompt** (START_DAY.bat does this by itself) |
+| PowerShell says "running scripts is disabled" | Use **Command Prompt**, or run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` first |
+| AWS console opens in the wrong region | Top-right region menu → **US East (N. Virginia) us-east-1** |
+| `.env` not visible in Explorer | It starts with a dot. Open it with `notepad .env` from `C:\AskIT\dxc-agentic-ai` |
+| `verify_env.py` not found | It is in `tools\`: `python tools\verify_env.py` |
