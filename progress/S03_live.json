@@ -1,10 +1,10 @@
 {
   "session": "S03",
-  "section": "Welcome",
-  "section_idx": 0,
+  "section": "\u2460 Embeddings",
+  "section_idx": 1,
   "sections_total": 10,
-  "xp_total": 6,
-  "active_minutes": 0,
+  "xp_total": 9,
+  "active_minutes": 3,
   "quiz_answered": 0,
   "quiz_correct": 0,
   "labs_self_reported": {
@@ -17,5 +17,5 @@
     "github_user": "askanilkumar",
     "team": "A"
   },
-  "updated_at": "2026-10-04T16:06:19.082668+00:00"
+  "updated_at": "2026-10-04T16:10:56.470351+00:00"
 }
