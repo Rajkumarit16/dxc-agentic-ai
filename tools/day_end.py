@@ -41,6 +41,15 @@ def run(cmd, timeout=180):
     return p.returncode, (p.stdout + p.stderr).strip()
 
 
+def is_trainer_repo():
+    """True when 'origin' is the trainer's own repo (not a participant fork).
+    Progress must never be pushed there: it would clash with the trainer's real pushes."""
+    if os.environ.get("ASKIT_ALLOW_PUSH") == "1":
+        return False
+    _, url = run(["git", "remote", "get-url", "origin"])
+    return "askanilkumar/dxc-agentic-ai" in url.lower()
+
+
 def lab_results(session):
     """Run pytest for the session's labs; return {lab: {passed, failed, total}}."""
     out = {}
@@ -213,6 +222,9 @@ def _commit_and_push(session, me, steps, message=None):
         steps.append({"ok": True, "step": "Committed"})
     else:
         steps.append({"ok": True, "step": "Nothing new to commit"})
+    if is_trainer_repo():
+        steps.append({"ok": True, "step": "Trainer copy: progress saved locally, NOT pushed"})
+        return True, steps
     code, msg = run(["git", "push", "origin", "HEAD"])
     if code != 0:  # fork has newer commits (e.g. pushed from another place): merge them, keep my files, retry once
         run(["git", "pull", "--no-edit", "-X", "ours", "origin", "main"])
@@ -227,6 +239,8 @@ def _commit_and_push(session, me, steps, message=None):
 def push_heartbeat(session):
     """Commit + push only progress/<session>_live.json. Silent on failure (retried next cycle)."""
     f = f"progress/{session}_live.json"
+    if is_trainer_repo():
+        return True  # trainer/test copy: never push progress to the trainer repo
     if not (ROOT / f).exists() or not GIT_LOCK.acquire(timeout=5):
         return False
     try:
