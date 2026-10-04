@@ -4,6 +4,15 @@ Run:   python Day03\\Labs\\lab02-naive-rag\\lab02b_index.py
 Check: pytest Day03\\Labs\\lab02-naive-rag -k "challenge_4 or challenge_5 or challenge_6"
 
 Complete TODO-4, TODO-5, TODO-6. Everything else is ready.
+
+HOW TO WORK ON EACH TODO
+  1. Read the WHY (what idea you are building).
+  2. PREDICT the answer in the "My prediction" line, before you run anything.
+  3. Fill the blanks (___) and delete the `raise NotImplementedError` line.
+  4. Run the script. Was your prediction right? Write one sentence on why.
+
+BIG IDEA: a long article mixes many topics, so its single vector is a blurry
+average. We cut articles into small CHUNKS, embed each one, and search the chunks.
 """
 import csv
 import json
@@ -22,28 +31,44 @@ RESULTS_FILE = HERE / "submission" / "lab02b_results.json"
 
 def chunk_text(text, size=80, overlap=20):
     """Split text into chunks of `size` words; each chunk repeats the last `overlap` words of the previous one."""
-    # TODO-4:
-    #   words = text.split()
-    #   step = size - overlap
-    #   make chunks words[i : i + size] for i = 0, step, 2*step, ... while there are still new words
-    #   join each chunk back with " " and return the list of strings
-    #   Tip: stop when i + overlap >= len(words) (the rest is already in the previous chunk)
+    # TODO-4: Cut a long text into overlapping pieces of `size` words.
+    # WHY:   Small chunks keep one idea each, so the right piece matches a question.
+    #        OVERLAP repeats the last few words in the next chunk so a sentence that
+    #        falls on a cut is not lost.
+    # STEPS: (1) split the text into a list of words: text.split()
+    #        (2) each new chunk starts `step` words after the previous one,
+    #            where step = size - overlap
+    #        (3) a chunk is words[start : start + size], joined back with " "
+    #        (4) stop when the rest of the words are already inside the last chunk
+    # SKELETON:  words = ___ ;  step = ___ ;  loop start = 0, step, 2*step ...
+    # Example: 100 words, size=40, overlap=10 -> chunk 1 starts at word 0,
+    #        chunk 2 starts at word ____ (predict, then check with the test)
     raise NotImplementedError("TODO-4")
 
 
 def build_index(client, docs, size=80, overlap=20):
     """docs = {doc_id: text}. Return a list of chunks: {"id", "doc_id", "text", "vector"}."""
-    # TODO-5: for each doc, split with chunk_text(); for each piece create
-    #   {"id": f"{doc_id}#{i}", "doc_id": doc_id, "text": piece, "vector": embed_text(client, piece)}
+    # TODO-5: Build the index: every chunk stored together with its vector.
+    # WHY:   An index is just a list where each chunk keeps its text (to show the
+    #        user) and its vector (to search). Doing this once means we do not pay
+    #        for embeddings again on every question.
+    # STEPS: for each article, cut it with your chunk_text(); for each piece, add one
+    #        dict with keys id, doc_id, text, vector. The id is "<doc_id>#<number>".
+    #        The vector comes from embed_text(client, piece).
+    # My prediction: with 20 articles, will there be fewer or more than 20 chunks? ____
     raise NotImplementedError("TODO-5")
 
 
 def search(client, index, query, k=3):
     """Return the k best chunks for `query` as dicts WITHOUT the vector, plus a "score"."""
-    # TODO-6:
-    #   q = np.array(embed_text(client, query))
-    #   score each chunk: cosine similarity between q and chunk["vector"]
-    #   sort highest first, return top k as {"id", "doc_id", "text", "score"}
+    # TODO-6: Find the chunks closest in meaning to the question.
+    # WHY:   Same idea as Part A TODO-3, now on chunks. The question must be embedded
+    #        with the SAME model, otherwise its numbers cannot be compared.
+    # STEPS: (1) embed the query into a vector
+    #        (2) score every chunk vector against it (cosine, as you wrote in Part A)
+    #        (3) sort highest first, keep k, return {"id","doc_id","text","score"}
+    #            (leave the long vector out of the result)
+    # My prediction: what hit rate @3 will you get? ____ %  (you will see it on run)
     raise NotImplementedError("TODO-6")
 
 

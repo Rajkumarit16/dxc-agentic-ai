@@ -12,10 +12,10 @@
 Parts are independent: stuck in A? Do B anyway.
 
 ## How to work
-1. Open the file in VS Code, find `TODO-n`, follow the hints.
+1. Open the file in VS Code, find `TODO-n`. Each TODO explains **why** it exists, lists the **steps** and gives a **skeleton with blanks (`___`)**. Write your **prediction** first, fill the blanks, then run.
 2. Run it: `python Day03\Labs\lab02-naive-rag\lab02a_embeddings.py`
 3. Check yourself: `pytest Day03\Labs\lab02-naive-rag -k "challenge_1 or challenge_2 or challenge_3"` (Part A), `-k "challenge_4 or challenge_5 or challenge_6"` (Part B).
-4. Stuck on a TODO for more than 10 minutes? `Day03\Hints\lab02-naive-rag\`. Copy ONE TODO only.
+4. Stuck on a TODO for more than 5 minutes? `Day03\Hints\lab02-naive-rag\`. Copy ONE TODO only, then explain it to your neighbour in one sentence.
 
 Models: **AWS Bedrock Titan Text Embeddings v2** and a small Nova model. It uses the same `.env` as Lab 1. Nothing to set up.
 
@@ -43,4 +43,4 @@ Finished early? Write the last step yourself: a grounded prompt and the retrieve
 |---|---|
 | `AccessDeniedException` on Titan | Titan Embeddings v2 is not enabled for your user: tell the trainer |
 | `ThrottlingException` | The whole class is embedding at once. Wait 30 seconds and re-run (retries are automatic) |
-| First run of Part B is slow | It embeds every chunk once (about a minute) and caches the index in `index\` |
+| First run of Part B is slow | It embeds every chunk once (about a minute) (it is rebuilt on each run) |

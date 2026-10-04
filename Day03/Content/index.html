@@ -334,15 +334,15 @@ header .bar{max-width:1700px}
     <h2>Titan embeddings and similarity</h2>
     <div class="wwho"><div><b>What we do</b>Convert text into embeddings with Titan and measure similarity to find the best KB article for a ticket.</div><div><b>Why</b>Embeddings let search match meaning, not just keywords. This is the foundation of RAG.</div><div><b>Outcome / learning</b>You know what an embedding is, how cosine similarity ranks results, and where it gets fooled.</div><div><b>How</b>Call Titan v2 (TODO-1) &rarr; write cosine similarity (TODO-2) &rarr; return top-k (TODO-3) &rarr; run it and study the misses.</div></div>
     <ol>
-      <li><b>Get ready:</b> Command Prompt &rarr; <span class="path">cd /d C:\AskIT\dxc-agentic-ai</span> &rarr; <span class="path">.venv\Scripts\activate</span> &rarr; <span class="path">cd Day03\Labs\lab02-naive-rag</span>. You must see <b>(.venv)</b> at the start of the line.</li>
+      <li><b>Get ready:</b> Command Prompt &rarr; <span class="path">cd /d C:\AskIT\dxc-agentic-ai</span> &rarr; <span class="path">cd Day03\Labs\lab02-naive-rag</span>. (START_DAY already installed the packages: no venv to activate. If you see <b>No module named</b>, run <span class="path">python -m pip install -r requirements.txt</span> from <span class="path">C:\AskIT\dxc-agentic-ai</span>.)</li>
       <li><b>Open the file:</b> <span class="path">notepad lab02a_embeddings.py</span> (or VS Code). Search for <b>TODO</b>.</li>
-      <li><b>Fill 3 TODOs</b> (hints are in the file): <b>TODO-1</b> call Titan v2 through Bedrock <span class="tag">AWS</span> &middot; <b>TODO-2</b> cosine similarity &middot; <b>TODO-3</b> top-k most similar.</li>
+      <li><b>Fill 3 TODOs</b>. Each has a <b>WHY</b>, <b>STEPS</b> and a <b>skeleton with blanks (___)</b>. Write your <b>prediction</b> first, then run: <b>TODO-1</b> call Titan v2 through Bedrock <span class="tag">AWS</span> &middot; <b>TODO-2</b> cosine similarity &middot; <b>TODO-3</b> top-k most similar.</li>
       <li><b>Run:</b> <span class="path">python lab02a_embeddings.py</span></li>
       <li><b>Look:</b> do the scores match your intuition? Which ticket got the wrong KB article?</li>
       <li><b>Check:</b> <span class="path">pytest -k "challenge_1 or challenge_2 or challenge_3"</span></li>
       <li><span class="tag">stretch</span> Change dimensions to 256 and 1,024: do the rankings change? Then add 3 tickets of your own that should match a KB article.</li>
     </ol>
-    <div class="card"><b>Stuck?</b> No <b>(.venv)</b> &rarr; run the activate line again &middot; <b>AccessDenied</b> on Titan &rarr; tell the trainer &middot; <b>Throttling</b> &rarr; wait 30 s, run again &middot; <b>IndentationError</b> &rarr; every line inside a function starts with the same 4 spaces &middot; Still stuck after 10 min &rarr; open <span class="path">Day03\Hints\lab02-naive-rag</span> and copy ONE TODO only.</div>
+    <div class="card"><b>Stuck?</b> <b>No module named ...</b> &rarr; run <span class="path">python -m pip install -r requirements.txt</span> from the repo folder &middot; <b>AccessDenied</b> on Titan &rarr; tell the trainer &middot; <b>Throttling</b> &rarr; wait 30 s, run again &middot; <b>IndentationError</b> &rarr; every line inside a function starts with the same 4 spaces &middot; Still stuck after 5 min &rarr; open <span class="path">Day03\Hints\lab02-naive-rag</span>, copy ONE TODO only, then explain it to your neighbour in one sentence.</div>
     <div class="openpath">📂 Open in VS Code: <span class="path">C:\AskIT\dxc-agentic-ai\Day03\Labs\lab02-naive-rag\README.md</span></div>
     <div class="row"><button class="btn" data-done="lab2a">🏁 I completed Lab 2A: run my checks and push</button></div>
   </div>
@@ -400,15 +400,15 @@ header .bar{max-width:1700px}
     <h2>Build your own vector index</h2>
     <div class="wwho"><div><b>What we do</b>Split the 20 KB articles into chunks, embed them and build a searchable index.</div><div><b>Why</b>The model can't read the whole KB for every question. Retrieval quality, starting with chunking, decides answer quality.</div><div><b>Outcome / learning</b>Your own working vector index and a measured hit rate @3 that you can improve.</div><div><b>How</b>Chunk with overlap (TODO-4) &rarr; embed every chunk (TODO-5) &rarr; search (TODO-6) &rarr; run it and study the misses.</div></div>
     <ol>
-      <li><b>Same window</b> as Lab 2A, with <b>(.venv)</b> showing, in <span class="path">Day03\Labs\lab02-naive-rag</span>.</li>
+      <li><b>Same window</b> as Lab 2A, in <span class="path">Day03\Labs\lab02-naive-rag</span>.</li>
       <li><b>Open the file:</b> <span class="path">notepad lab02b_index.py</span>. Search for <b>TODO</b>.</li>
-      <li><b>Fill 3 TODOs:</b> <b>TODO-4</b> split text into overlapping chunks &middot; <b>TODO-5</b> build the index (id, doc_id, text, vector) <span class="tag">AWS</span> &middot; <b>TODO-6</b> search the index.</li>
+      <li><b>Fill 3 TODOs</b> (read the WHY, write your prediction, fill the ___): <b>TODO-4</b> split text into overlapping chunks &middot; <b>TODO-5</b> build the index (id, doc_id, text, vector) <span class="tag">AWS</span> &middot; <b>TODO-6</b> search the index.</li>
       <li><b>Run:</b> <span class="path">python lab02b_index.py</span> &rarr; you get your <b>hit rate @3</b>. (First run embeds every chunk: about a minute.)</li>
       <li><b>Look:</b> which questions MISS? Why do you think so?</li>
       <li><b>Check:</b> <span class="path">pytest -k "challenge_4 or challenge_5 or challenge_6"</span></li>
       <li><span class="tag">stretch</span> Try chunk sizes 40, 80 and 200 words and note the hit rates in <span class="path">submission\stretch_chunking.md</span>. Which wins, and why?</li>
     </ol>
-    <div class="card"><b>Stuck?</b> Still stuck after 10 min &rarr; open <span class="path">Day03\Hints\lab02-naive-rag</span> and copy ONE TODO only.</div>
+    <div class="card"><b>Stuck?</b> Still stuck after 5 min &rarr; open <span class="path">Day03\Hints\lab02-naive-rag</span>, copy ONE TODO only, then explain it to your neighbour in one sentence.</div>
     <div class="openpath">📂 Open in VS Code: <span class="path">C:\AskIT\dxc-agentic-ai\Day03\Labs\lab02-naive-rag\README.md</span></div>
     <div class="row"><button class="btn" data-done="lab2b">🏁 I completed Lab 2B: run my checks and push</button></div>
   </div>
@@ -463,7 +463,7 @@ header .bar{max-width:1700px}
     <h2>The AskIT RAG app: run it, then break it</h2>
     <div class="wwho"><div><b>What we do</b>Run a complete RAG app (Chroma + Titan + Nova on Bedrock) on the AskIT KB, then run measured experiments on chunk size and Top-K.</div><div><b>Why</b>You built the engine in 2A and 2B. Here you see it wired to an LLM, and learn which settings matter before the team ADR.</div><div><b>Outcome / learning</b>A table of experiments (doc hit, answer hit) that proves which setting is best, and a list of questions naive RAG still gets wrong.</div><div><b>How</b>Load the KB &rarr; ask 3 questions &rarr; run the Mini eval for 4 settings &rarr; write what you learned.</div></div>
     <ol>
-      <li><b>Start the app:</b> <span class="path">cd /d C:\AskIT\dxc-agentic-ai</span> &rarr; <span class="path">.venv\Scripts\activate</span> &rarr; <span class="path">pip install -r Day03\Labs\lab02-askit-rag-app\requirements.txt</span> &rarr; <span class="path">cd Day03\Labs\lab02-askit-rag-app</span> &rarr; <span class="path">streamlit run app.py</span> <span class="tag">AWS Bedrock is the default</span></li>
+      <li><b>Start the app:</b> <span class="path">cd /d C:\AskIT\dxc-agentic-ai</span> &rarr; <span class="path">python -m pip install -r Day03\Labs\lab02-askit-rag-app\requirements.txt</span> &rarr; <span class="path">cd Day03\Labs\lab02-askit-rag-app</span> &rarr; <span class="path">streamlit run app.py</span> <span class="tag">AWS Bedrock is the default</span></li>
       <li><b>Load the KB:</b> sidebar &rarr; <b>Load AskIT KB (20 articles)</b>. Wait for the green message.</li>
       <li><b>Ask 3 questions</b> and open <b>🔍 Retrieved chunks</b> each time: <i>minimum password length</i> &middot; <i>VPN error 809</i> &middot; <i>vegan food on Fridays</i> (not in the KB: what does AskIT say?).</li>
       <li><b>Experiment:</b> <b>🧪 Mini eval</b> &rarr; <b>Run</b>. Change ONE setting, click <b>Load AskIT KB</b> again, run again. Fill the 4 rows in <span class="path">submission\experiment.md</span> and write what you learned.</li>
