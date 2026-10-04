@@ -254,7 +254,7 @@ header .bar{max-width:1700px}
   <div class="grid g3">
     <div class="card"><div class="big-emoji">1️⃣</div><b>Text → numbers</b><br>"I'm locked out" becomes a list of 512 numbers (a <i>vector</i>).</div>
     <div class="card"><div class="big-emoji">2️⃣</div><b>Similar meaning → close together</b><br>"Can't sign in" gets almost the same numbers. "Printer jammed" gets very different ones.</div>
-    <div class="card"><div class="big-emoji">3️⃣</div><b>Measure the closeness</b><br>A small formula (cosine or distance) turns "close" into a score we can sort by.</div>
+    <div class="card"><div class="big-emoji">3️⃣</div><b>Measure the closeness</b><br>A small formula (cosine similarity) turns "close" into a score we can sort by.</div>
   </div>
 
   <h3>The meaning map explorer <span class="chip b">BASIC</span></h3>
@@ -272,30 +272,24 @@ header .bar{max-width:1700px}
 
     <!-- step 2 -->
     <div class="tabpanel">
-      <div class="say"><b>Idea:</b> if each text is a point in space, <b>distance = difference in meaning</b>. Here is a 2-D version: circles are helpdesk tickets, squares are KB articles. Click any point. Then flip <b>Cosine / Euclidean</b>: the picture changes (rays from the centre vs a distance circle). The 3 neighbours are usually the same, which is the point: for normalised vectors both rank alike.</div>
-      <div class="row" style="margin-top:0"><div class="seg" id="metSeg"><button class="on" data-m="cos">Cosine</button><button data-m="euc">Euclidean</button></div>
-        <label><input type="checkbox" id="mmCl" checked> show the 4 topic areas</label></div>
+      <div class="say"><b>Idea:</b> if each text is a point in space, <b>distance = difference in meaning</b>. Here is a 2-D version: circles are helpdesk tickets, squares are KB articles. Click any point. The lines from the centre show each text's direction: the smaller the angle between two lines, the closer the meaning.</div>
+      <div class="row" style="margin-top:0"><label><input type="checkbox" id="mmCl" checked> show the 4 topic areas</label></div>
       <div class="card" style="padding:8px;margin-top:10px"><svg id="emap" viewBox="0 0 640 420" style="width:100%;height:auto;display:block" role="img" aria-label="Meaning map of helpdesk tickets and KB articles"></svg></div>
       <div id="emapOut" class="muted" style="margin-top:8px">Click a point to see its 3 nearest neighbours.</div>
     </div>
 
     <!-- step 3 -->
     <div class="tabpanel">
-      <div class="say"><b>Idea:</b> "close" can be measured two ways. <b>Cosine</b> asks "do the arrows point the same way?" (angle). <b>Euclidean</b> asks "how far apart are the arrow tips?" (straight line).</div>
+      <div class="say"><b>Idea:</b> we measure "close" with <b>cosine similarity</b>. It asks one question: "do the two arrows point the same way?" Same direction = same meaning.</div>
       <div class="grid g2" style="align-items:center">
-        <svg id="angSvg" viewBox="0 0 400 230" style="width:100%;max-width:440px;height:auto" role="img" aria-label="Two vectors, angle and distance"></svg>
+        <svg id="angSvg" viewBox="0 0 400 230" style="width:100%;max-width:440px;height:auto" role="img" aria-label="Two vectors and the angle between them"></svg>
         <div>
           <div class="slider" style="grid-template-columns:110px 1fr 56px"><label>Angle</label><input type="range" id="ang" min="0" max="180" step="5" value="30"><output id="oAng"></output></div>
-          <div class="slider" style="grid-template-columns:110px 1fr 56px"><label>Length of B</label><input type="range" id="len" min="0.3" max="2" step="0.1" value="1"><output id="oLen"></output></div>
-          <label><input type="checkbox" id="nrm"> Normalise (make both arrows length 1, as Titan does)</label>
-          <div class="stats"><div class="stat"><span class="muted">Cosine (high = close)</span><b id="cosVal">0.87</b></div><div class="stat"><span class="muted">Euclidean (low = close)</span><b id="eucVal">0.52</b></div></div>
+          <div class="stats"><div class="stat"><span class="muted">Cosine (high = close)</span><b id="cosVal">0.87</b></div></div>
           <div id="cosTxt" style="font-weight:700;margin-top:8px"></div>
         </div>
       </div>
-      <h4 style="margin:18px 0 4px">Do the two measures ever disagree?</h4>
-      <p class="muted" style="margin-top:0">Three KB articles vs one ticket (the grey arrow at 0°). Toggle <b>Normalise</b> above and watch the two rankings.</p>
-      <table class="simtable" id="rankTbl"></table>
-      <div class="say" style="margin-top:12px"><b>So which one do we use?</b> Titan returns <b>normalised</b> vectors (length 1). For those, cosine and Euclidean give <b>exactly the same ranking</b> (distance² = 2 − 2×cosine), and the dot product equals cosine. In the lab we use <b>cosine</b>. If you ever mix models that do not normalise, prefer cosine.</div>
+      <div class="say" style="margin-top:12px"><b>Remember:</b> cosine near <b>1</b> = same meaning, near <b>0</b> = unrelated. Titan gives us the vectors; cosine ranks the KB articles. That is all Lab 2A needs. (Other measures exist, but we do not need them today.)</div>
     </div>
 
     <!-- step 4 -->
@@ -552,7 +546,7 @@ const Q={
   {l:"b",q:"An embedding is…",o:["A summary of the text","A list of numbers that captures the text's meaning","A compressed zip of the text","The model's answer"],a:1,w:"Embeddings are vectors; similar meaning → nearby vectors."},
   {l:"b",q:"\"I can't sign in\" vs \"I'm locked out of my account\" will likely have…",o:["Low similarity: different words","High similarity: same meaning","Zero similarity","An error"],a:1,w:"Embeddings capture meaning, not exact words. That is why they beat keyword search here."},
   {l:"i",q:"You embed KB docs with 1,024 dims and questions with 512 dims. Result?",o:["Works, just slower","Cannot compare: vectors must come from the same model and size","Better accuracy","Cheaper"],a:1,w:"Same model, same size, both sides. Always."},
-  {l:"i",q:"Titan returns normalised vectors. What does that mean for cosine vs Euclidean distance?",o:["Cosine is always better","They give the same ranking","Euclidean is always better","They cannot be compared"],a:1,w:"For length-1 vectors, distance² = 2 − 2×cosine, so sorting by either gives the same order."}
+  {l:"i",q:"Two tickets use completely different words but mean the same thing. What will their cosine score be?",o:["Close to 1: embeddings capture meaning","Close to 0 because the words differ","An error","Always exactly 0.5"],a:0,w:"Embeddings place similar meanings close together even when no words are shared."}
  ],
  m2:[
   {l:"i",q:"Why add overlap between chunks?",o:["To use more storage","So sentences at chunk borders are not cut off from their meaning","Required by Titan","To make chunks smaller"],a:1,w:"Overlap keeps context that sits on a boundary in at least one full chunk."},
@@ -568,7 +562,7 @@ const Q={
   {l:"b",q:"RAG stands for…",o:["Rapid AI Generation","Retrieval-Augmented Generation","Random Answer Guard","Retrieve And Guess"],a:1,w:"Retrieve relevant text, augment the prompt, generate the answer."},
   {l:"b",q:"Which AWS model did we use to create embeddings?",o:["Claude Haiku","Amazon Titan Text Embeddings v2","Amazon Nova Pro","Llama"],a:1,w:"Titan Text Embeddings v2 on Bedrock."},
   {l:"b",q:"Cosine similarity of 1.0 means…",o:["Opposite meaning","Unrelated","Same direction: very similar meaning","An error"],a:2,w:"1 = same direction; around 0 = unrelated."},
-  {l:"i",q:"For normalised vectors, which statement is true?",o:["Cosine and Euclidean rank results identically","Euclidean needs a bigger model","Cosine only works on short text","Normalising removes the meaning"],a:0,w:"distance² = 2 − 2×cosine for unit vectors."},
+  {l:"i",q:"Why do we compare vectors with cosine similarity?",o:["It compares direction (meaning), not length","It is faster than calling the model","It does not need embeddings","It only works on short text"],a:0,w:"Cosine ignores vector length and looks only at direction, which carries the meaning."},
   {l:"i",q:"Hit rate @3 = 70% means…",o:["70% of answers are correct","For 70% of test questions, the right doc was in the top 3 results","70% of chunks were used","Latency is 70 ms"],a:1,w:"It measures retrieval, not the final answer. Both matter."},
   {l:"i",q:"Why is RAG usually preferred over fine-tuning for company policies?",o:["Fine-tuning is illegal","Policies change often; RAG updates instantly and shows sources","RAG is always cheaper per token","Fine-tuning cannot learn text"],a:1,w:"Update the documents, not the model, and get citations."},
   {l:"i",q:"Indexing (chunk + embed + store) happens…",o:["On every question","Once, and again when documents change","Never","Only in the browser"],a:1,w:"Offline indexing; online retrieval per question."},
@@ -790,42 +784,32 @@ const TK=[
   h+=`<line x1="${cx}" y1="6" x2="${cx}" y2="${H-6}" stroke="var(--line)"/><line x1="6" y1="${cy}" x2="${W-6}" y2="${cy}" stroke="var(--line)"/><circle cx="${cx}" cy="${cy}" r="3" fill="var(--muted)"/>`;
   let near=[];
   if(sel!==null){near=top3(metric);
-   if(metric==="cos"){[sel,...near.map(n=>n.i)].forEach((i,j)=>{const[x,y]=pos(P[i]);h+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--accent)" stroke-width="${j?1.5:2.5}" stroke-dasharray="${j?"5 4":"0"}" opacity="${j?.8:1}" style="pointer-events:none"/>`});}
-   else{const[sx0,sy0]=pos(P[sel]),r=Math.max(...near.map(n=>n.d));h+=`<ellipse cx="${sx0}" cy="${sy0}" rx="${r*sx}" ry="${r*sy}" fill="var(--accent-soft)" opacity=".35" stroke="var(--accent)" stroke-dasharray="5 4" stroke-width="2" style="pointer-events:none"/>`;
-    near.forEach(n=>{const[c,d]=pos(P[n.i]);h+=`<line x1="${sx0}" y1="${sy0}" x2="${c}" y2="${d}" stroke="var(--accent)" stroke-width="2.5"/>`})}}
+   if(metric==="cos"){[sel,...near.map(n=>n.i)].forEach((i,j)=>{const[x,y]=pos(P[i]);h+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--accent)" stroke-width="${j?1.5:2.5}" stroke-dasharray="${j?"5 4":"0"}" opacity="${j?.8:1}" style="pointer-events:none"/>`});}}
   P.forEach((p,i)=>{const[x,y]=pos(p),on=i===sel,nb=near.some(n=>n.i===i),col=on||nb?"var(--accent)":"var(--muted)";
    const anchor=x<130?"start":x>510?"end":"middle",tx=anchor==="start"?x-6:anchor==="end"?x+6:x,ty=p.k==="k"?y-13:y+22;
    const shape=p.k==="t"?`<circle cx="${x}" cy="${y}" r="${on?9:7}" fill="${col}" stroke="var(--surface)" stroke-width="2"/>`:`<rect x="${x-7}" y="${y-7}" width="14" height="14" rx="3" fill="${on||nb?"var(--accent)":"var(--surface2)"}" stroke="${col}" stroke-width="2.5"/>`;
    h+=`<g data-i="${i}" style="cursor:pointer"><circle cx="${x}" cy="${y}" r="16" fill="transparent"/>${shape}<text x="${tx}" text-anchor="${anchor}" y="${ty}" font-size="12" fill="var(--ink)" font-weight="${on?700:400}" paint-order="stroke" stroke="var(--surface)" stroke-width="3">${p.n}</text></g>`});
   svg.innerHTML=h;svg.querySelectorAll("g[data-i]").forEach(g=>g.onclick=()=>{sel=+g.dataset.i;draw();addXP("mm2",3)});
-  if(sel!==null){const a=top3("cos").map(n=>n.i).sort().join(),b=top3("euc").map(n=>n.i).sort().join();
-   out.innerHTML=`<div style="margin-bottom:6px;color:var(--accent)">${metric==="cos"?"Cosine looks at the <b>angle</b> from the centre: rays pointing the same way = close.":"Euclidean looks at <b>straight-line distance</b>: the circle holds the 3 nearest."}</div><b>${P[sel].n}</b> → nearest 3 by <b>${metric==="cos"?"cosine (angle)":"Euclidean (distance)"}</b>:<table class="simtable"><tr><th>Neighbour</th><th>Cosine</th><th>Distance</th></tr>`+near.map(n=>`<tr><td>${P[n.i].k==="k"?"▢ ":"● "}${P[n.i].n}</td><td class="num" style="${metric==="cos"?"color:var(--accent)":""}">${n.c.toFixed(2)}</td><td class="num" style="${metric==="euc"?"color:var(--accent)":""}">${n.d.toFixed(2)}</td></tr>`).join("")+`</table><div class="muted" style="font-size:15px;margin-top:6px">${a===b?"Cosine and Euclidean pick the same 3 neighbours here.":"Cosine and Euclidean pick different neighbours for this point: toggle above to compare. Step 3 explains why."}</div>`}}
+  if(sel!==null){
+   out.innerHTML=`<div style="margin-bottom:6px;color:var(--accent)">Cosine looks at the <b>angle</b> from the centre: lines pointing the same way = close in meaning.</div><b>${P[sel].n}</b> → 3 nearest by <b>cosine</b>:<table class="simtable"><tr><th>Neighbour</th><th>Cosine (1 = same meaning)</th></tr>`+near.map(n=>`<tr><td>${P[n.i].k==="k"?"▢ ":"● "}${P[n.i].n}</td><td class="num" style="color:var(--accent)">${n.c.toFixed(2)}</td></tr>`).join("")+`</table>`}}
  $("mmCl").onchange=draw;
- document.querySelectorAll("#metSeg button").forEach(b=>b.onclick=()=>{metric=b.dataset.m;document.querySelectorAll("#metSeg button").forEach(x=>x.classList.toggle("on",x===b));draw();addXP("mm2m",2)});
  sel=0;draw();}
 
 /* step 3: measuring close */
 {const svg=$("angSvg"),ox=200,oy=205,U=95;
- const C=[["Article C1",10,2.2],["Article C2",35,.8],["Article C3",60,1]];
- const rk=(arr,key,asc)=>[...arr.keys()].sort((a,b)=>asc?arr[a][key]-arr[b][key]:arr[b][key]-arr[a][key]);
- const f=()=>{const a=+$("ang").value,nm=$("nrm").checked,l=nm?1:+$("len").value,r=a*Math.PI/180;
-  $("oAng").textContent=a+"°";$("oLen").textContent=l.toFixed(1);$("len").disabled=nm;
-  const c=Math.cos(r),d=Math.sqrt(1+l*l-2*l*c);$("cosVal").textContent=c.toFixed(2);$("eucVal").textContent=d.toFixed(2);
+ const f=()=>{const a=+$("ang").value,r=a*Math.PI/180;
+  $("oAng").textContent=a+"°";
+  const c=Math.cos(r);$("cosVal").textContent=c.toFixed(2);
   $("cosTxt").textContent=c>0.8?"Very similar meaning":c>0.4?"Related":c>-0.2?"Unrelated":"Opposite direction";
-  const bx=ox+U*l*Math.cos(r),by=oy-U*l*Math.sin(r);
+  const bx=ox+U*Math.cos(r),by=oy-U*Math.sin(r);
   let arc="";{const R=30,x2=ox+R*Math.cos(r),y2=oy-R*Math.sin(r);arc=`<path d="M ${ox+R} ${oy} A ${R} ${R} 0 0 0 ${x2} ${y2}" fill="none" stroke="var(--muted)" stroke-width="2"/>`}
   svg.innerHTML=`<circle cx="${ox}" cy="${oy}" r="${U}" fill="none" stroke="var(--line)" stroke-dasharray="4 4"/>${arc}
-   <line x1="${ox+U}" y1="${oy}" x2="${bx}" y2="${by}" stroke="var(--bad)" stroke-width="3" stroke-dasharray="6 4"/>
    <line x1="${ox}" y1="${oy}" x2="${ox+U}" y2="${oy}" stroke="var(--accent)" stroke-width="5" stroke-linecap="round"/>
    <line x1="${ox}" y1="${oy}" x2="${bx}" y2="${by}" stroke="var(--warn)" stroke-width="5" stroke-linecap="round"/>
    <text x="${ox+U+8}" y="${oy+5}" font-size="14" fill="var(--accent)" font-weight="700">A</text><text x="${bx+8}" y="${by-4}" font-size="14" fill="var(--warn)" font-weight="700">B</text>
-   <text x="${ox+36}" y="${oy-8}" font-size="12" fill="var(--muted)">angle</text><text x="14" y="22" font-size="13" fill="var(--bad)">red dashes = Euclidean distance</text>`;
-  const rows=C.map(x=>{const L=nm?1:x[2],th=x[1]*Math.PI/180;return {n:x[0],th:x[1],L,cos:Math.cos(th),d:Math.sqrt(1+L*L-2*L*Math.cos(th))}});
-  const rc=rk(rows,"cos",false),re=rk(rows,"d",true),same=rc.join()===re.join();
-  $("rankTbl").innerHTML=`<tr><th>Article</th><th>Angle</th><th>Length</th><th>Cosine → rank</th><th>Distance → rank</th></tr>`+rows.map((x,i)=>`<tr><td>${x.n}</td><td>${x.th}°</td><td>${x.L.toFixed(1)}</td><td class="num">${x.cos.toFixed(2)} → #${rc.indexOf(i)+1}</td><td class="num">${x.d.toFixed(2)} → #${re.indexOf(i)+1}</td></tr>`).join("")+
-   `<tr><td colspan="5"><div class="alert ${same?"ok":"bad"}">${same?"Same ranking with both measures.":"The rankings DISAGREE: the long arrow C1 points the right way but is far away. Tick Normalise to fix it."}</div></td></tr>`;
+   <text x="${ox+36}" y="${oy-8}" font-size="12" fill="var(--muted)">angle</text>`;
  };
- ["ang","len","nrm"].forEach(id=>$(id).addEventListener("input",()=>{f();addXP("mm3",3)}));f();}
+ $("ang").addEventListener("input",()=>{f();addXP("mm3",3)});f();}
 
 /* step 4: semantic search */
 {const sel=$("tkSel");TK.forEach((t,i)=>sel.add(new Option(t[1],i)));sel.value=2;
