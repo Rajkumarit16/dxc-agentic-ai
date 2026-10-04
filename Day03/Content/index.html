@@ -272,7 +272,7 @@ header .bar{max-width:1700px}
 
     <!-- step 2 -->
     <div class="tabpanel">
-      <div class="say"><b>Idea:</b> if each text is a point in space, <b>distance = difference in meaning</b>. Here is a 2-D version: circles are helpdesk tickets, squares are KB articles. Click any point.</div>
+      <div class="say"><b>Idea:</b> if each text is a point in space, <b>distance = difference in meaning</b>. Here is a 2-D version: circles are helpdesk tickets, squares are KB articles. Click any point. Then flip <b>Cosine / Euclidean</b>: the picture changes (rays from the centre vs a distance circle). The 3 neighbours are usually the same, which is the point: for normalised vectors both rank alike.</div>
       <div class="row" style="margin-top:0"><div class="seg" id="metSeg"><button class="on" data-m="cos">Cosine</button><button data-m="euc">Euclidean</button></div>
         <label><input type="checkbox" id="mmCl" checked> show the 4 topic areas</label></div>
       <div class="card" style="padding:8px;margin-top:10px"><svg id="emap" viewBox="0 0 640 420" style="width:100%;height:auto;display:block" role="img" aria-label="Meaning map of helpdesk tickets and KB articles"></svg></div>
@@ -789,17 +789,20 @@ const TK=[
   if($("mmCl").checked)clusters.forEach(c=>{h+=`<ellipse cx="${c.x}" cy="${c.y}" rx="${c.rx}" ry="${c.ry}" fill="var(--accent-soft)" opacity=".5" stroke="var(--accent)" stroke-dasharray="4 4" style="pointer-events:none"/><text style="pointer-events:none" x="${c.x}" y="${Math.max(14,c.y-c.ry-4)}" text-anchor="middle" font-size="13" font-weight="700" fill="var(--accent)">${c.n.toUpperCase()}</text>`});
   h+=`<line x1="${cx}" y1="6" x2="${cx}" y2="${H-6}" stroke="var(--line)"/><line x1="6" y1="${cy}" x2="${W-6}" y2="${cy}" stroke="var(--line)"/><circle cx="${cx}" cy="${cy}" r="3" fill="var(--muted)"/>`;
   let near=[];
-  if(sel!==null){near=top3(metric);near.forEach(n=>{const[a,b]=pos(P[sel]),[c,d]=pos(P[n.i]);h+=`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="var(--accent)" stroke-width="2.5"/>`})}
+  if(sel!==null){near=top3(metric);
+   if(metric==="cos"){[sel,...near.map(n=>n.i)].forEach((i,j)=>{const[x,y]=pos(P[i]);h+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--accent)" stroke-width="${j?1.5:2.5}" stroke-dasharray="${j?"5 4":"0"}" opacity="${j?.8:1}" style="pointer-events:none"/>`});}
+   else{const[sx0,sy0]=pos(P[sel]),r=Math.max(...near.map(n=>n.d));h+=`<ellipse cx="${sx0}" cy="${sy0}" rx="${r*sx}" ry="${r*sy}" fill="var(--accent-soft)" opacity=".35" stroke="var(--accent)" stroke-dasharray="5 4" stroke-width="2" style="pointer-events:none"/>`;
+    near.forEach(n=>{const[c,d]=pos(P[n.i]);h+=`<line x1="${sx0}" y1="${sy0}" x2="${c}" y2="${d}" stroke="var(--accent)" stroke-width="2.5"/>`})}}
   P.forEach((p,i)=>{const[x,y]=pos(p),on=i===sel,nb=near.some(n=>n.i===i),col=on||nb?"var(--accent)":"var(--muted)";
    const anchor=x<130?"start":x>510?"end":"middle",tx=anchor==="start"?x-6:anchor==="end"?x+6:x,ty=p.k==="k"?y-13:y+22;
    const shape=p.k==="t"?`<circle cx="${x}" cy="${y}" r="${on?9:7}" fill="${col}" stroke="var(--surface)" stroke-width="2"/>`:`<rect x="${x-7}" y="${y-7}" width="14" height="14" rx="3" fill="${on||nb?"var(--accent)":"var(--surface2)"}" stroke="${col}" stroke-width="2.5"/>`;
    h+=`<g data-i="${i}" style="cursor:pointer"><circle cx="${x}" cy="${y}" r="16" fill="transparent"/>${shape}<text x="${tx}" text-anchor="${anchor}" y="${ty}" font-size="12" fill="var(--ink)" font-weight="${on?700:400}" paint-order="stroke" stroke="var(--surface)" stroke-width="3">${p.n}</text></g>`});
   svg.innerHTML=h;svg.querySelectorAll("g[data-i]").forEach(g=>g.onclick=()=>{sel=+g.dataset.i;draw();addXP("mm2",3)});
   if(sel!==null){const a=top3("cos").map(n=>n.i).sort().join(),b=top3("euc").map(n=>n.i).sort().join();
-   out.innerHTML=`<b>${P[sel].n}</b> → nearest 3 by <b>${metric==="cos"?"cosine (angle)":"Euclidean (distance)"}</b>:<table class="simtable"><tr><th>Neighbour</th><th>Cosine</th><th>Distance</th></tr>`+near.map(n=>`<tr><td>${P[n.i].k==="k"?"▢ ":"● "}${P[n.i].n}</td><td class="num" style="${metric==="cos"?"color:var(--accent)":""}">${n.c.toFixed(2)}</td><td class="num" style="${metric==="euc"?"color:var(--accent)":""}">${n.d.toFixed(2)}</td></tr>`).join("")+`</table><div class="muted" style="font-size:15px;margin-top:6px">${a===b?"Cosine and Euclidean pick the same 3 neighbours here.":"Cosine and Euclidean pick different neighbours for this point: toggle above to compare. Step 3 explains why."}</div>`}}
+   out.innerHTML=`<div style="margin-bottom:6px;color:var(--accent)">${metric==="cos"?"Cosine looks at the <b>angle</b> from the centre: rays pointing the same way = close.":"Euclidean looks at <b>straight-line distance</b>: the circle holds the 3 nearest."}</div><b>${P[sel].n}</b> → nearest 3 by <b>${metric==="cos"?"cosine (angle)":"Euclidean (distance)"}</b>:<table class="simtable"><tr><th>Neighbour</th><th>Cosine</th><th>Distance</th></tr>`+near.map(n=>`<tr><td>${P[n.i].k==="k"?"▢ ":"● "}${P[n.i].n}</td><td class="num" style="${metric==="cos"?"color:var(--accent)":""}">${n.c.toFixed(2)}</td><td class="num" style="${metric==="euc"?"color:var(--accent)":""}">${n.d.toFixed(2)}</td></tr>`).join("")+`</table><div class="muted" style="font-size:15px;margin-top:6px">${a===b?"Cosine and Euclidean pick the same 3 neighbours here.":"Cosine and Euclidean pick different neighbours for this point: toggle above to compare. Step 3 explains why."}</div>`}}
  $("mmCl").onchange=draw;
  document.querySelectorAll("#metSeg button").forEach(b=>b.onclick=()=>{metric=b.dataset.m;document.querySelectorAll("#metSeg button").forEach(x=>x.classList.toggle("on",x===b));draw();addXP("mm2m",2)});
- draw();}
+ sel=0;draw();}
 
 /* step 3: measuring close */
 {const svg=$("angSvg"),ox=200,oy=205,U=95;
