@@ -4,6 +4,16 @@ Run:   python Day03\\Labs\\lab02-naive-rag\\lab02a_embeddings.py
 Check: pytest Day03\\Labs\\lab02-naive-rag -k "challenge_1 or challenge_2 or challenge_3"
 
 Complete TODO-1, TODO-2, TODO-3. Everything else is ready.
+
+HOW TO WORK ON EACH TODO
+  1. Read the WHY (what idea you are building).
+  2. PREDICT the answer in the "My prediction" line, before you run anything.
+  3. Fill the blanks (___) and delete the `raise NotImplementedError` line.
+  4. Run the script. Was your prediction right? Write one sentence on why.
+
+BIG IDEA: a computer cannot compare "meaning" in words. An embedding turns a
+sentence into a list of numbers (a vector). Sentences with similar meaning get
+similar numbers, so "find similar meaning" becomes "find nearby numbers".
 """
 import json
 import sys
