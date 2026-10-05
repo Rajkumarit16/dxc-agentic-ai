@@ -1,0 +1,17 @@
+{
+  "session": "S01",
+  "section": "\u2461 Models",
+  "section_idx": 3,
+  "sections_total": 9,
+  "xp_total": 44,
+  "active_minutes": 23,
+  "quiz_answered": 3,
+  "quiz_correct": 1,
+  "labs_self_reported": {
+    "labA": true,
+    "labB": false,
+    "labC": false
+  },
+  "participant": null,
+  "updated_at": "2026-10-05T03:50:02.508219+00:00"
+}
