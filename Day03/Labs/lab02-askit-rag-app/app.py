@@ -14,10 +14,16 @@ from pathlib import Path
 import chromadb
 import streamlit as st
 from docx import Document
-from dotenv import load_dotenv
+from dotenv import dotenv_values, load_dotenv
 from pypdf import PdfReader
 
-load_dotenv(Path(__file__).resolve().parents[3] / ".env")   # the course .env (AWS keys, Bedrock model id)
+# the course .env (AWS keys, Bedrock model id): search upward from this file, then the current folder
+_envs = [d / ".env" for d in Path(__file__).resolve().parents if (d / ".env").is_file()]
+ENV_FOUND = " + ".join(str(e) for e in _envs)
+for _e in reversed(_envs):                      # farthest (course .env) first, nearest last; empty values never win
+    for _k, _v in dotenv_values(_e).items():
+        if _v:
+            os.environ[_k] = _v
 load_dotenv()
 st.set_page_config(page_title="AskIT RAG Lab", page_icon="🔎", layout="wide")
 
@@ -29,18 +35,29 @@ DB_PATH = "chroma_db"
 MODES = ["Auto (Bedrock → OpenAI)", "Bedrock only", "OpenAI only"]
 
 # ---------------------------------------------------------------- Sidebar: keys & mode
-def bedrock_ready():
+def bedrock_status():
+    """(ready, reason) - the reason is shown in the sidebar when not ready."""
     try:
         import boto3
-        return bool(os.getenv("BEDROCK_SMALL_MODEL_ID")) and boto3.Session().get_credentials() is not None
-    except Exception:
-        return False
+    except Exception as e:
+        return False, f"boto3 not installed in this Python ({e}). Run: pip install boto3"
+    if not ENV_FOUND:
+        return False, "no .env file found above this folder"
+    if not os.getenv("BEDROCK_SMALL_MODEL_ID"):
+        return False, f"BEDROCK_SMALL_MODEL_ID empty in {ENV_FOUND}"
+    if boto3.Session().get_credentials() is None:
+        return False, f"AWS keys empty in {ENV_FOUND}"
+    return True, ""
+
+
+def bedrock_ready():
+    return bedrock_status()[0]
 
 
 with st.sidebar:
     st.header("🔑 Providers")
     br_ok = bedrock_ready()
-    st.caption("🟢 AWS Bedrock ready (main)" if br_ok else "🔴 AWS Bedrock: keys or BEDROCK_SMALL_MODEL_ID missing in the course .env")
+    st.caption("🟢 AWS Bedrock ready (main)" if br_ok else "🔴 AWS Bedrock not ready: " + bedrock_status()[1])
     openai_key = st.text_input("OpenAI API key (backup, optional)", value=os.getenv("OPENAI_API_KEY", ""), type="password")
     mode = st.radio("Provider", MODES, index=0)
     if mode.startswith("Auto"):
@@ -425,7 +442,7 @@ if question:
                 with st.expander("🔍 Retrieved chunks"):
                     for doc, m, dist in hits:
                         st.markdown(f"**{m['source']} #{m['chunk']}** — similarity {1 - dist:.3f}")
-                        st.caption(doc)
+                        st.text(doc)   # plain text: chunks start with "# Heading", markdown would render it huge
         except Exception as e:
             reply = f"⚠️ {e}"
             st.error(reply)
