@@ -1,6 +1,6 @@
 """
 AskIT RAG Lab — load the Orbit Corp IT knowledge base, chunk + embed + store it, then chat with it.
-Stack: Streamlit | AWS Bedrock (main: Nova chat + Titan embeddings) or OpenAI (backup) | ChromaDB (local vector store)
+Stack: Streamlit | AWS Bedrock (main: Nova chat + Titan embeddings) or OpenAI (backup) | numpy + JSON (local vector store)
 Run:   streamlit run app.py
 """
 import hashlib
@@ -11,7 +11,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-import chromadb
+import numpy as np
 import streamlit as st
 from docx import Document
 from dotenv import dotenv_values, load_dotenv
@@ -31,7 +31,7 @@ BEDROCK_EMBED = "amazon.titan-embed-text-v2:0"
 OPENAI_EMBED = "text-embedding-3-small"
 BEDROCK_MODELS = ["amazon.nova-micro-v1:0", "amazon.nova-lite-v1:0"]   # small = cheap
 OPENAI_PREFERRED = ["gpt-5-mini", "gpt-4.1-mini", "gpt-4o-mini"]
-DB_PATH = "chroma_db"
+DB_PATH = Path(__file__).resolve().parent / "vector_store"   # next to app.py, whatever folder you launch from
 MODES = ["Auto (Bedrock → OpenAI)", "Bedrock only", "OpenAI only"]
 
 # ---------------------------------------------------------------- Sidebar: keys & mode
@@ -92,11 +92,62 @@ def openai_client(key):
     return OpenAI(api_key=key)
 
 
+class Store:
+    """Tiny local vector store: vectors in memory (numpy), saved to a JSON file. Same idea as Lab 2B's index."""
+
+    def __init__(self, path):
+        self.path = Path(path)
+        self.ids, self.docs, self.metas, self.vecs = [], [], [], np.zeros((0, 0))
+        if self.path.is_file():
+            try:
+                d = json.loads(self.path.read_text(encoding="utf-8"))
+                self.ids, self.docs, self.metas = d["ids"], d["docs"], d["metas"]
+                self.vecs = np.array(d["vecs"], dtype=float) if self.ids else np.zeros((0, 0))
+            except Exception:
+                self.ids, self.docs, self.metas, self.vecs = [], [], [], np.zeros((0, 0))
+
+    def _save(self):
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.path.write_text(json.dumps({"ids": self.ids, "docs": self.docs, "metas": self.metas,
+                                         "vecs": self.vecs.tolist()}), encoding="utf-8")
+
+    def count(self):
+        return len(self.ids)
+
+    def add(self, ids, documents, embeddings, metadatas):
+        new = np.array(embeddings, dtype=float)
+        self.vecs = new if not self.ids else np.vstack([self.vecs, new])
+        self.ids += list(ids)
+        self.docs += list(documents)
+        self.metas += list(metadatas)
+        self._save()
+
+    def delete(self, where=None, ids=None):
+        drop = set(ids or [])
+        keep = [i for i, (cid, m) in enumerate(zip(self.ids, self.metas))
+                if cid not in drop and not (where and all(m.get(k) == v for k, v in where.items()))]
+        self.ids = [self.ids[i] for i in keep]
+        self.docs = [self.docs[i] for i in keep]
+        self.metas = [self.metas[i] for i in keep]
+        self.vecs = self.vecs[keep] if keep else np.zeros((0, 0))
+        self._save()
+
+    def get(self, include=None):
+        return {"ids": list(self.ids), "documents": list(self.docs), "metadatas": list(self.metas)}
+
+    def query(self, query_embeddings, n_results):
+        q = np.array(query_embeddings[0], dtype=float)
+        norms = np.linalg.norm(self.vecs, axis=1) * (np.linalg.norm(q) or 1.0)
+        sims = (self.vecs @ q) / np.where(norms == 0, 1.0, norms)
+        top = np.argsort(-sims)[:n_results]
+        return {"documents": [[self.docs[i] for i in top]], "metadatas": [[self.metas[i] for i in top]],
+                "distances": [[float(1 - sims[i]) for i in top]]}   # distance = 1 - cosine
+
+
 @st.cache_resource
 def get_collection(provider):
-    # One collection per embedding provider: Bedrock and OpenAI vectors are not compatible.
-    db = chromadb.PersistentClient(path=DB_PATH)
-    return db.get_or_create_collection(f"rag_lab_{provider}", metadata={"hnsw:space": "cosine"})
+    # One store per embedding provider: Bedrock and OpenAI vectors are not compatible.
+    return Store(DB_PATH / f"rag_lab_{provider}.json")
 
 
 SKIP = ("tts", "image", "live", "audio", "embedding", "realtime", "transcribe", "search", "native")
