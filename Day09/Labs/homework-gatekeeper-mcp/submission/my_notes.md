@@ -1,0 +1,3 @@
+One shared Gatekeeper server keeps the policy in one place, makes updates and audits consistent, and avoids drift or duplicated logic across every agent.
+I would put log and role controls in front of it, because they provide visibility and least-privilege enforcement, while mask and timeout are useful but less critical for a decision-service that should be consistent and auditable.
+I would host it on a VM over HTTP for this use case, because it gives a stable, easy-to-manage service boundary with simple access control and operational visibility while staying lightweight and low-risk compared with Lambda.
